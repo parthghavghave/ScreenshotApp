@@ -6,6 +6,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -23,6 +25,8 @@ public class ScreenshotApp extends JFrame{
 	
 	private static final String SCREENSHOTS_FOLDER = DESKTOP_PATH + File.separator + "Regression screenshots";
 		
+	private static String dateToday = new SimpleDateFormat(" dd_MM_yyyy").format(new Date());
+	
 	private static String subfolderName;
 	
 	private int initialX;
@@ -126,7 +130,7 @@ public class ScreenshotApp extends JFrame{
 
 	private String getSubFolderName() {
 		String subfolderName = JOptionPane.showInputDialog("Enter the folder name for the session");
-		return subfolderName;
+		return subfolderName + dateToday;
 	}
 	
 

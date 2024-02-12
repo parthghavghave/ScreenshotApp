@@ -67,12 +67,23 @@ public class InterfaceService extends JFrame {
 
 		ImageIcon toggleicon = new ImageIcon(getClass().getResource("/Resources/icons/adv.png"));
 		toggleicon = new ImageIcon(toggleicon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+		
+		ImageIcon dashboard = new ImageIcon(getClass().getResource("/Resources/icons/dashboard.png"));
+		dashboard = new ImageIcon(dashboard.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
 		JButton captureButton = new JButton(captureIcon);
 		JButton closeButton = new JButton(closeIcon);
 		JButton createBufferOfSSButton = new JButton(createBufferOfSS);
-		JButton createBufferImgButton = new JButton(storeBufferImg);
+		JButton storeBufferImgButton = new JButton(storeBufferImg);
 		JButton toggleBufferButtons = new JButton(toggleicon);
+        JButton openDashboardButton = new JButton(dashboard);
+        
+        customizeJButton.customizeButton(captureButton);
+        customizeJButton.customizeButton(closeButton);
+        customizeJButton.customizeButton(createBufferOfSSButton);
+        customizeJButton.customizeButton(storeBufferImgButton);
+        customizeJButton.customizeButton(toggleBufferButtons);
+        customizeJButton.customizeButton(openDashboardButton);
 
 		// Add mouse listener for dragging
 		captureButton.addActionListener(new ActionListener() {
@@ -100,7 +111,7 @@ public class InterfaceService extends JFrame {
 				toggleSize();
 				boolean isVisible = createBufferOfSSButton.isVisible();
 				createBufferOfSSButton.setVisible(isVisible);
-				createBufferImgButton.setVisible(isVisible);
+				storeBufferImgButton.setVisible(isVisible);
 			}
 		});
 		createBufferOfSSButton.addActionListener(new ActionListener() {
@@ -111,19 +122,30 @@ public class InterfaceService extends JFrame {
 				setVisible(true);
 			}
 		});
-		createBufferImgButton.addActionListener(new ActionListener() {
+		storeBufferImgButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String innerSubFolder = JOptionPane.showInputDialog("All captured will be stored in ");
-				ScreenShotService.storrBufferShot(screenshotBuffer, sessionFolder, innerSubFolder);
+				if(!screenshotBuffer.isEmpty()) {					
+					String innerSubFolder = JOptionPane.showInputDialog("All captured will be stored in ");
+					ScreenShotService.storrBufferShot(screenshotBuffer, sessionFolder, innerSubFolder);
+				}
 			}
 		});
+		
+		 // Add a button to open the dashboard window
+        openDashboardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openDashboard();
+            }
+        });
 
 		add(captureButton);
 		add(closeButton);
 		add(toggleBufferButtons);
 		add(createBufferOfSSButton);
-		add(createBufferImgButton);
+		add(storeBufferImgButton);
+		add(openDashboardButton);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -153,20 +175,25 @@ public class InterfaceService extends JFrame {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int) screenSize.getWidth();
-		setLocation(screenWidth - getWidth() - 300, 100);
-
+		setLocation(screenWidth - getWidth() - 170, 120);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(200, 40);
+		setSize(Constants.Interface_Width, 40);
 		setVisible(true);
 	}
+	
+	private void openDashboard() {
+        DashboardWindow dashboard = new DashboardWindow();
+        dashboard.setVisible(true);
+    }
 
 	private void toggleSize() {
 		if (isSmallSize) {
-			setSize(200, 75);
+			setSize(Constants.Interface_Width, 75);
 			setAlwaysOnTop(true);
 			isSmallSize = false;
 		} else {
-			setSize(200, 40);
+			setSize(Constants.Interface_Width, 40);
 			isSmallSize = true;
 			setAlwaysOnTop(true);
 		}

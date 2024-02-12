@@ -32,7 +32,6 @@ public class InterfaceService extends JFrame {
 	private List<BufferedImage> screenshotBuffer = new ArrayList<>();
 
 	public InterfaceService() {
-		setTitle("Screenshot App");
 		setLayout(new FlowLayout());
 		setAlwaysOnTop(true);
 		setResizable(false);
@@ -59,13 +58,13 @@ public class InterfaceService extends JFrame {
 
 		ImageIcon createBufferOfSS = new ImageIcon(getClass().getResource("/Resources/icons/ImageBuffer.png"));
 		createBufferOfSS = new ImageIcon(createBufferOfSS.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-		
+
 		ImageIcon storeBufferImg = new ImageIcon(getClass().getResource("/Resources/icons/storagefolder.png"));
 		storeBufferImg = new ImageIcon(storeBufferImg.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
 		ImageIcon closeIcon = new ImageIcon(getClass().getResource("/Resources/icons/close.png"));
 		closeIcon = new ImageIcon(closeIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-		
+
 		ImageIcon toggleicon = new ImageIcon(getClass().getResource("/Resources/icons/adv.png"));
 		toggleicon = new ImageIcon(toggleicon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
@@ -88,7 +87,7 @@ public class InterfaceService extends JFrame {
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!screenshotBuffer.isEmpty()) {
+				if (!screenshotBuffer.isEmpty()) {
 					String innerSubFolder = JOptionPane.showInputDialog("Unsaved screenshots will be stored in");
 					ScreenShotService.storrBufferShot(screenshotBuffer, sessionFolder, innerSubFolder);
 				}
@@ -96,36 +95,36 @@ public class InterfaceService extends JFrame {
 			}
 		});
 		toggleBufferButtons.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	toggleSize();
-                boolean isVisible = createBufferOfSSButton.isVisible();
-                createBufferOfSSButton.setVisible(isVisible);
-                createBufferImgButton.setVisible(isVisible);
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toggleSize();
+				boolean isVisible = createBufferOfSSButton.isVisible();
+				createBufferOfSSButton.setVisible(isVisible);
+				createBufferImgButton.setVisible(isVisible);
+			}
+		});
 		createBufferOfSSButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	setVisible(false);
-                screenshotBuffer.add(ScreenShotService.captureScreenshot());
-                setVisible(true);
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				screenshotBuffer.add(ScreenShotService.captureScreenshot());
+				setVisible(true);
+			}
+		});
 		createBufferImgButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-        		String innerSubFolder = JOptionPane.showInputDialog("All captured will be stored in ");
-                ScreenShotService.storrBufferShot(screenshotBuffer, sessionFolder, innerSubFolder);
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String innerSubFolder = JOptionPane.showInputDialog("All captured will be stored in ");
+				ScreenShotService.storrBufferShot(screenshotBuffer, sessionFolder, innerSubFolder);
+			}
+		});
 
 		add(captureButton);
 		add(closeButton);
 		add(toggleBufferButtons);
 		add(createBufferOfSSButton);
 		add(createBufferImgButton);
-		
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -152,7 +151,6 @@ public class InterfaceService extends JFrame {
 			}
 		});
 
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int) screenSize.getWidth();
 		setLocation(screenWidth - getWidth() - 300, 100);
@@ -161,16 +159,16 @@ public class InterfaceService extends JFrame {
 		setSize(200, 40);
 		setVisible(true);
 	}
-	
+
 	private void toggleSize() {
-        if (isSmallSize) {
-            setSize(200, 75);
-            setAlwaysOnTop(true);
-            isSmallSize = false;
-        } else {
-        	setSize(200, 40);
-            isSmallSize = true;
-            setAlwaysOnTop(true);
-        }
-    }
+		if (isSmallSize) {
+			setSize(200, 75);
+			setAlwaysOnTop(true);
+			isSmallSize = false;
+		} else {
+			setSize(200, 40);
+			isSmallSize = true;
+			setAlwaysOnTop(true);
+		}
+	}
 }

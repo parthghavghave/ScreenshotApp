@@ -38,7 +38,7 @@ public class customizeJButton {
 		button.setBackground(Color.BLACK);
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Arial", Font.BOLD, 16));
-		button.setPreferredSize(new Dimension(100, 30));
+		button.setPreferredSize(new Dimension(100, 25));
 		
 	}
 }

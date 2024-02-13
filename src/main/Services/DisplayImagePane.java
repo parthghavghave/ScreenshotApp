@@ -51,10 +51,12 @@ public class DisplayImagePane {
 			// Create three buttons
 			JButton saveButton = new JButton("Save");
 			JButton copyButton = new JButton("Copy");
+			JButton openButton = new JButton("Open");
 			JButton clearButton = new JButton("Clear");
 
 			customizeJButton.customizeTxtButton(saveButton);
 			customizeJButton.customizeTxtButton(copyButton);
+			customizeJButton.customizeTxtButton(openButton);
 			customizeJButton.customizeTxtButton(clearButton);
 
 			// Add action listeners to buttons
@@ -71,6 +73,13 @@ public class DisplayImagePane {
 					ScreenShotService.copyImageToClipboard(image);
 				}
 			});
+			
+			openButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ScreenShotService.openImageFile(imageFile);
+				}
+			});
 
 			clearButton.addActionListener(new ActionListener() {
 				@Override
@@ -82,6 +91,7 @@ public class DisplayImagePane {
 			// Add buttons to button panel
 			buttonPanel.add(saveButton);
 			buttonPanel.add(copyButton);
+			buttonPanel.add(openButton);
 			buttonPanel.add(clearButton);
 
 			TextAndButton.setLeftComponent(textArea);

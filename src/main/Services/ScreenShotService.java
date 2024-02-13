@@ -1,6 +1,7 @@
 package main.Services;
 
 import java.awt.AWTException;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.datatransfer.Clipboard;
 import java.awt.Rectangle;
@@ -61,6 +62,19 @@ public class ScreenShotService {
             clipboard.setContents(transferable, null);
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+	
+	public static void openImageFile(File imageFile) {
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.OPEN)) {
+                try {
+                    desktop.open(imageFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

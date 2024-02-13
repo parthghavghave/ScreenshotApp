@@ -37,7 +37,7 @@ class ImageFileTreeCellRenderer extends DefaultTreeCellRenderer {
                     // Create a JLabel to display the icon and text
                     JLabel label = new JLabel();
                     label.setIcon(icon);
-                    label.setText(file.getName());
+//                    label.setText(file.getName());
 
                     // Create a JPanel to add some spacing
                     JPanel panel = new JPanel(new BorderLayout());

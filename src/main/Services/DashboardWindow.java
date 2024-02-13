@@ -7,7 +7,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import Resources.Constants;
-import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
@@ -29,7 +28,7 @@ public class DashboardWindow extends JFrame {
 
 		// Create a JPanel for the file system tree
 		JPanel fileSystemPanel = new JPanel(new BorderLayout());
-		fileSystemPanel.setPreferredSize(new Dimension(300, 700)); // Set preferred size
+		fileSystemPanel.setPreferredSize(new Dimension(300, Constants.DASHBOARD_HEIGHT)); // Set preferred size
 		splitPane.setLeftComponent(fileSystemPanel);
 
 		// Create a JTree to represent the folder structure
@@ -49,7 +48,7 @@ public class DashboardWindow extends JFrame {
 		imagePanel = new JPanel(new BorderLayout());
 		splitPane.setRightComponent(imagePanel);
 
-		// Create text area
+		// Create text area for input text
 		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
@@ -59,8 +58,9 @@ public class DashboardWindow extends JFrame {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
-				if(!textArea.getText().isEmpty() || !textArea.getText().isBlank()) {
-					DisplayImagePane.saveText(selectedFile, textArea.getText());
+				if (!textArea.getText().isEmpty() || !textArea.getText().isBlank()) {
+					textDataService.saveText(selectedFile, textArea.getText());
+					textArea.setText("");
 				}
 				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 				if (selectedNode != null && selectedNode.getUserObject() instanceof File) {
@@ -72,22 +72,12 @@ public class DashboardWindow extends JFrame {
 			}
 		});
 
-		// Add key listener to text area
-        textArea.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if ((e.getKeyCode() == KeyEvent.VK_S) && ((e.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0)) {
-                	DisplayImagePane.saveText(selectedFile, textArea.getText());
-                }
-            }
-        });
-
 		// Set the initial divider location
 		splitPane.setDividerLocation(300);
 
 		// Set frame properties
 		pack();
-		setSize(1400, 700);
+		setSize(Constants.DASHBOARD_WIDTH, Constants.DASHBOARD_HEIGHT);
 		setLocation(150, 150);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -96,15 +86,16 @@ public class DashboardWindow extends JFrame {
 	private void buildTree(File directory, DefaultMutableTreeNode parent) {
 		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
-				DefaultMutableTreeNode node;
-				if (file.isDirectory()) {
-					node = new DefaultMutableTreeNode(file.getName());
-				} else {
-					node = new DefaultMutableTreeNode(file);
-				}
-				parent.add(node);
-				if (file.isDirectory()) {
-					buildTree(file, node);
+				if(!file.getName().toLowerCase().endsWith(".properties")) {					
+					DefaultMutableTreeNode node;
+					if (file.isDirectory()) {
+						node = new DefaultMutableTreeNode(file.getName());
+						buildTree(file, node);
+					}
+					else {
+						node = new DefaultMutableTreeNode(file);
+					}
+					parent.add(node);
 				}
 			}
 		}

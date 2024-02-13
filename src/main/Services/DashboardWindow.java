@@ -9,6 +9,8 @@ import javax.swing.tree.DefaultTreeModel;
 import Resources.Constants;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class DashboardWindow extends JFrame {
@@ -74,6 +76,13 @@ public class DashboardWindow extends JFrame {
 
 		// Set the initial divider location
 		splitPane.setDividerLocation(300);
+		
+		addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	textDataService.saveText(selectedFile, textArea.getText());
+            }
+        });
 
 		// Set frame properties
 		pack();

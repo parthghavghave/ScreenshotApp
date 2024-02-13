@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Constants {
 
-	private static final String DESKTOP_PATH = System.getProperty("user.home") + File.separator + "Downloads";
+	private static final String DESKTOP_PATH = System.getProperty("user.home") + File.separator + "Documents";
 
 	public static final String SCREENSHOTS_FOLDER = DESKTOP_PATH + File.separator + "Regression screenshots";
 

@@ -80,7 +80,8 @@ public class DashboardWindow extends JFrame {
 		addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-            	textDataService.saveText(selectedFile, textArea.getText());
+            	if(!textArea.getText().isEmpty())
+            		textDataService.saveText(selectedFile, textArea.getText());
             }
         });
 

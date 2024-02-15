@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultTreeModel;
 import Resources.Constants;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -24,13 +25,21 @@ public class DashboardWindow extends JFrame {
 		setTitle("Screenshot Dashboard");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = toolkit.getScreenSize();
+		int dashboardHeight = (int) ((screenSize.height) * (Constants.DASHBOARD_HEIGHT));
+		int dashboardWidth = (int) ((screenSize.width) * (Constants.DASHBOARD_WIDTH));
+
 		// Create a JSplitPane to split the window horizontally
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		getContentPane().add(splitPane);
 
 		// Create a JPanel for the file system tree
 		JPanel fileSystemPanel = new JPanel(new BorderLayout());
-		fileSystemPanel.setPreferredSize(new Dimension(300, Constants.DASHBOARD_HEIGHT)); // Set preferred size
+		fileSystemPanel.setPreferredSize(
+				new Dimension((int) (dashboardWidth * Constants.FILESYSTEM_PANEL_WIDTH), dashboardHeight)); // Set
+																											// preferred
+																											// size
 		splitPane.setLeftComponent(fileSystemPanel);
 
 		// Create a JTree to represent the folder structure
@@ -42,7 +51,7 @@ public class DashboardWindow extends JFrame {
 		// Customize the cell renderer to display a text box with each image file
 		tree.setCellRenderer(new ImageFileTreeCellRenderer());
 
-		// Add the JTree to a JScrollPane and add it to the file system panel
+		// Add the JTree to a JScrollPane and add it to the file system panel 
 		JScrollPane treeScrollPane = new JScrollPane(tree);
 		fileSystemPanel.add(treeScrollPane, BorderLayout.CENTER);
 
@@ -68,26 +77,24 @@ public class DashboardWindow extends JFrame {
 				if (selectedNode != null && selectedNode.getUserObject() instanceof File) {
 					selectedFile = (File) selectedNode.getUserObject();
 					if (isImageFile(selectedFile)) {
-						DisplayImagePane.displayImage(selectedFile, imagePanel, textArea);
+						DisplayImagePane.displayImage(selectedFile, imagePanel, textArea, dashboardWidth,
+								dashboardHeight);
 					}
 				}
 			}
 		});
 
-		// Set the initial divider location
-		splitPane.setDividerLocation(300);
-		
 		addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-            	if(!textArea.getText().isEmpty())
-            		textDataService.saveText(selectedFile, textArea.getText());
-            }
-        });
+			@Override
+			public void windowClosing(WindowEvent e) {
+				if (!textArea.getText().isEmpty())
+					textDataService.saveText(selectedFile, textArea.getText());
+			}
+		});
 
 		// Set frame properties
 		pack();
-		setSize(Constants.DASHBOARD_WIDTH, Constants.DASHBOARD_HEIGHT);
+		setSize(dashboardWidth, dashboardHeight);
 		setLocation(150, 150);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -96,13 +103,12 @@ public class DashboardWindow extends JFrame {
 	private void buildTree(File directory, DefaultMutableTreeNode parent) {
 		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
-				if(!file.getName().toLowerCase().endsWith(".properties")) {					
+				if (!file.getName().toLowerCase().endsWith(".properties")) {
 					DefaultMutableTreeNode node;
 					if (file.isDirectory()) {
 						node = new DefaultMutableTreeNode(file.getName());
 						buildTree(file, node);
-					}
-					else {
+					} else {
 						node = new DefaultMutableTreeNode(file);
 					}
 					parent.add(node);

@@ -1,6 +1,7 @@
 package main.Services;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,9 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
+import Resources.Constants;
+
 public class DisplayImagePane {
 
-	public static void displayImage(File imageFile, JPanel imagePanel, JTextArea textArea) {
+	public static void displayImage(File imageFile, JPanel imagePanel, JTextArea textArea, int dashboardWidth, int dashboardHeight) {
 		try {
 			try {
 				String existTxt = textDataService.getTxtForImg(imageFile);
@@ -32,21 +35,24 @@ public class DisplayImagePane {
 
 			BufferedImage image = ImageIO.read(imageFile);
 
-			int height = (int) (image.getHeight() - (image.getHeight() * 0.4));
-			int width = (int) (image.getWidth() - (image.getWidth() * 0.4));
-
 			JSplitPane ImageAndText = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 			JSplitPane TextAndButton = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
-			// Scale the image to fit within the imagePanel
-			ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+			int imageLableWidth = (int)(dashboardWidth*Constants.IMAGE_PANEL_WIDTH);
+			int imageLableHeight = (int)(dashboardHeight*Constants.IMAGE_PANEL_HEIGHT);
+			
+			ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(imageLableWidth, imageLableHeight, Image.SCALE_SMOOTH));
 			JLabel imageLabel = new JLabel(imageIcon);
-
-			ImageAndText.setTopComponent(imageLabel);
-			ImageAndText.setBottomComponent(TextAndButton);
-
-			// Create a JPanel for buttons
 			JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			JPanel textPanel = new JPanel();
+			textPanel.add(textArea);
+			
+			imageLabel.setPreferredSize(new Dimension(imageLableWidth,imageLableHeight));
+			
+			TextAndButton.setPreferredSize(new Dimension(imageLableWidth,dashboardHeight-imageLableHeight));
+			
+			ImageAndText.setTopComponent(imageLabel);
+			ImageAndText.setBottomComponent(TextAndButton); 
 
 			// Create three buttons
 			JButton saveButton = new JButton("Save");
@@ -96,8 +102,7 @@ public class DisplayImagePane {
 
 			TextAndButton.setLeftComponent(textArea);
 			TextAndButton.setRightComponent(buttonPanel);
-
-			TextAndButton.setDividerLocation(850);
+			TextAndButton.setDividerLocation(imageLableWidth-Constants.BUTTON_PANEL_WIDTH);
 
 			// Clear previous components and display the new contentPanel
 			imagePanel.removeAll();

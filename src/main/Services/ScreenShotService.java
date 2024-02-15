@@ -15,7 +15,7 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 
 public class ScreenShotService {
-
+	
 	public static BufferedImage captureScreenshot() {
 		try {
 			Robot robot = new Robot();

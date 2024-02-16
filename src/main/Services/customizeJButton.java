@@ -32,13 +32,13 @@ public class customizeJButton {
 //        button.setPressedIcon(new ImageIcon("pressed_icon.png")); // Example: Pressed icon
     }
 
-	public static void customizeTxtButton(JButton button) {
+	public static void customizeTxtButton(JButton button,int buttonPanelHeight) {
 		// TODO Auto-generated method stub
-		
+				
 		button.setBackground(Color.BLACK);
 		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Arial", Font.BOLD, 16));
-		button.setPreferredSize(new Dimension(100, 25));
+		button.setFont(new Font("Arial", Font.BOLD, (int)(buttonPanelHeight*0.08)));
+		button.setPreferredSize(new Dimension(100, (int)(buttonPanelHeight*0.12)));
 		
 	}
 }

@@ -16,6 +16,12 @@ import javax.imageio.ImageIO;
 
 public class ScreenShotService {
 	
+//	private boolean toggleCustomSaving = false;
+//	
+//	public void setToggleCustomSaving(boolean toggleCustomSaving) {
+//		this.toggleCustomSaving = toggleCustomSaving;
+//	}
+	
 	public static BufferedImage captureScreenshot() {
 		try {
 			Robot robot = new Robot();

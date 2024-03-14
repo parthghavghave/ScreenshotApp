@@ -10,6 +10,8 @@ import Resources.Constants;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -51,9 +53,12 @@ public class DashboardWindow extends JFrame {
 		// Customize the cell renderer to display a text box with each image file
 		tree.setCellRenderer(new ImageFileTreeCellRenderer());
 
-		// Add the JTree to a JScrollPane and add it to the file system panel 
+		// Add the JTree to a JScrollPane and add it to the file system panel
 		JScrollPane treeScrollPane = new JScrollPane(tree);
 		fileSystemPanel.add(treeScrollPane, BorderLayout.CENTER);
+
+		// Add a button against the root directory
+		JButton rootButton = new JButton("Extract to Word");
 
 		// Create a JPanel for the images
 		imagePanel = new JPanel(new BorderLayout());
@@ -83,6 +88,25 @@ public class DashboardWindow extends JFrame {
 				}
 			}
 		});
+
+		// Add tree selection listener for the root node
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+		    @Override
+		    public void valueChanged(TreeSelectionEvent e) {
+		        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+		        if (selectedNode != null && selectedNode.getParent().toString().equals("ScreenSnip")) {
+		            rootButton.addActionListener(new ActionListener() {
+		                @Override
+		                public void actionPerformed(ActionEvent e) {
+		                    String baseFolderPath = Constants.SCREENSHOTS_FOLDER + File.separator + selectedNode.toString();
+		                    WordExtractor.folderToWordDoc(baseFolderPath, selectedNode.toString());
+		                }
+		            });
+		        }
+		    }
+		});
+
+		fileSystemPanel.add(rootButton, BorderLayout.SOUTH);
 
 		addWindowListener(new WindowAdapter() {
 			@Override

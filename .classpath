@@ -6,5 +6,17 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/appengine-awt-1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/icu4j-4.8.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/itext-gae-4.2.0-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/ooxml-schemas-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/poi-3.10-FINAL.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/poi-ooxml-3.10-FINAL.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/sfntly-1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/xml-apis-1.0.b2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p.subhash.ghavghave/Downloads/jar_files/xmlbeans-2.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

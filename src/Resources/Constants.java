@@ -7,9 +7,11 @@ import java.util.Date;
 
 public class Constants {
 
-	private static final String DESKTOP_PATH = System.getProperty("user.home") + File.separator + "Documents";
+	public static final String DESKTOP_PATH = System.getProperty("user.home") + File.separator + "Documents";
+	
+	public static final String WORD_DOC_EXTRACT_PATH = System.getProperty("user.home") + File.separator + "Downloads";
 
-	public static final String SCREENSHOTS_FOLDER = DESKTOP_PATH + File.separator + "Regression screenshots";
+	public static final String SCREENSHOTS_FOLDER = DESKTOP_PATH + File.separator + "ScreenSnip";
 
 	public static String dateToday = new SimpleDateFormat(" dd_MM_yyyy").format(new Date());
 

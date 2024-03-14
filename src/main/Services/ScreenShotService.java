@@ -16,12 +16,6 @@ import javax.imageio.ImageIO;
 
 public class ScreenShotService {
 	
-//	private boolean toggleCustomSaving = false;
-//	
-//	public void setToggleCustomSaving(boolean toggleCustomSaving) {
-//		this.toggleCustomSaving = toggleCustomSaving;
-//	}
-	
 	public static BufferedImage captureScreenshot() {
 		try {
 			Robot robot = new Robot();
@@ -62,7 +56,6 @@ public class ScreenShotService {
 	
 	public static void copyImageToClipboard(Image imageFile) {
         try {
-//            Image image = Toolkit.getDefaultToolkit().getImage(imageFile);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             TransferableImage transferable = new TransferableImage(imageFile);
             clipboard.setContents(transferable, null);

@@ -1,4 +1,4 @@
-package main.Services;
+package main.Panels;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,6 +18,9 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
 import Resources.Constants;
+import main.Services.ScreenShotService;
+import main.Services.customizeJButton;
+import main.Services.textDataService;
 
 public class DisplayImagePane {
 

@@ -18,24 +18,19 @@ public class SessionFolderName {
 	static Boolean choosenFolderSelected = false;
 
 	public static String getSubFolderName() {
-//		String subfolderName = JOptionPane.showInputDialog("Enter the folder name for the session")+ Constants.dateToday;
-//		return subfolderName;
 
 		JPanel panel = new JPanel();
 		JTextField folderField = new JTextField(20);
 		JButton chooseFolderButton = new JButton("Choose..");
 
-		// Add components to the panel
 		panel.add(new JLabel("Enter the folder name for the session:"));
 		panel.add(folderField);
 		panel.add(chooseFolderButton);
 
-		// Create a file chooser with the default directory set
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fileChooser.setCurrentDirectory(new File(Constants.SCREENSHOTS_FOLDER));
 
-		// Add action listener to the choose folder button
 		chooseFolderButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -48,7 +43,6 @@ public class SessionFolderName {
 			}
 		});
 
-		// Show the option dialog
 		int option = JOptionPane.showConfirmDialog(null, panel, "Custom Input Dialog", JOptionPane.OK_CANCEL_OPTION);
 		if (option == JOptionPane.OK_OPTION) {
 			String folderName = folderField.getText();

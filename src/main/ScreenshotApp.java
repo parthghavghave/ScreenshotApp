@@ -2,7 +2,7 @@ package main;
 
 import javax.swing.*;
 
-import main.Services.InterfaceService;
+import main.Frames.InterfaceService;
 
 public class ScreenshotApp{
 	

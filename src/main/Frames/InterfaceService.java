@@ -1,4 +1,4 @@
-package main.Services;
+package main.Frames;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,6 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Resources.Constants;
+import main.Services.ScreenShotService;
+import main.Services.SessionFolderName;
+import main.Services.customizeJButton;
 
 public class InterfaceService extends JFrame {
 
@@ -30,6 +33,7 @@ public class InterfaceService extends JFrame {
 	private boolean isDragging = false;
 	private boolean isSmallSize = true;
 	private List<BufferedImage> screenshotBuffer = new ArrayList<>();
+	private DashboardWindow dashboard;
 
 	public InterfaceService() {
 		setLayout(new FlowLayout());
@@ -183,9 +187,12 @@ public class InterfaceService extends JFrame {
 	}
 	
 	private void openDashboard() {
-        DashboardWindow dashboard = new DashboardWindow();
-        dashboard.setVisible(true);
-    }
+	    if (dashboard == null || !dashboard.isVisible()) {
+	        dashboard = new DashboardWindow();
+	    } else {
+	        dashboard.toFront();
+	    }
+	}
 
 	private void toggleSize() {
 		if (isSmallSize) {

@@ -1,4 +1,4 @@
-package main.Services;
+package main.Frames;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -7,6 +7,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import Resources.Constants;
+import main.Panels.DisplayImagePane;
+import main.Services.ImageFileTreeCellRenderer;
+import main.Services.WordExtractor;
+import main.Services.textDataService;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -22,6 +27,7 @@ public class DashboardWindow extends JFrame {
 	private JPanel imagePanel;
 	private JTextArea textArea;
 	private File selectedFile;
+	private String selectedFolder;
 
 	public DashboardWindow() {
 		setTitle("Screenshot Dashboard");
@@ -79,6 +85,10 @@ public class DashboardWindow extends JFrame {
 					textArea.setText("");
 				}
 				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+				if (selectedNode != null && selectedNode.getParent() != null 
+			            && selectedNode.getParent().toString().equals("ScreenSnip")) {
+					selectedFolder = selectedNode.toString();
+				}
 				if (selectedNode != null && selectedNode.getUserObject() instanceof File) {
 					selectedFile = (File) selectedNode.getUserObject();
 					if (isImageFile(selectedFile)) {
@@ -89,23 +99,14 @@ public class DashboardWindow extends JFrame {
 			}
 		});
 
-		// Add tree selection listener for the root node
-		tree.addTreeSelectionListener(new TreeSelectionListener() {
-		    @Override
-		    public void valueChanged(TreeSelectionEvent e) {
-		        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-		        if (selectedNode != null && selectedNode.getParent().toString().equals("ScreenSnip")) {
-		            rootButton.addActionListener(new ActionListener() {
-		                @Override
-		                public void actionPerformed(ActionEvent e) {
-		                    String baseFolderPath = Constants.SCREENSHOTS_FOLDER + File.separator + selectedNode.toString();
-		                    WordExtractor.folderToWordDoc(baseFolderPath, selectedNode.toString());
-		                }
-		            });
-		        }
-		    }
-		});
-
+		rootButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String baseFolderPath = Constants.SCREENSHOTS_FOLDER + File.separator + selectedFolder;
+                WordExtractor.folderToWordDoc(baseFolderPath);
+            }
+        });
+		
 		fileSystemPanel.add(rootButton, BorderLayout.SOUTH);
 
 		addWindowListener(new WindowAdapter() {

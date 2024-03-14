@@ -10,7 +10,6 @@ import java.util.Properties;
 
 public class textDataService {
 
-	// Method to save text associated with an image
 	public static void saveText(File imageFile, String text) {
 		try {
 			Properties properties = new Properties();
@@ -27,10 +26,7 @@ public class textDataService {
 	}
 	
 	public static String getTxtForImg(File imageFile) {
-		Properties properties = new Properties();
-        
-        //null check for filepath
-        
+		Properties properties = new Properties();        
         try {
         	String filePath = imageFile.getAbsolutePath()+"data.properties";
         	FileInputStream fileInputStream = new FileInputStream(filePath);
@@ -45,7 +41,6 @@ public class textDataService {
 	public static String txtFileExists(File textFile) throws IOException {
 		String txt = "";
 		if (textFile.exists()) {
-			// Read and display the text from the text file
 			FileReader reader = new FileReader(textFile);
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			StringBuilder text = new StringBuilder();

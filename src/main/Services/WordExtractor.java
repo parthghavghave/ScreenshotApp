@@ -15,14 +15,20 @@ import javax.swing.JOptionPane;
 
 public class WordExtractor {
 
-	public static void folderToWordDoc(String baseFolderPath, String filename) {
+	public static void folderToWordDoc(String baseFolderPath) {
 
 		try {
 			XWPFDocument document = new XWPFDocument();
 
 			XWPFParagraph paragraph = document.createParagraph();
+			
+			int lastIndex = baseFolderPath.lastIndexOf("\\");
+			String baseFolderName = baseFolderPath.substring(lastIndex + 1);
+				
 			XWPFRun run = paragraph.createRun();
-			run.setText(filename);
+			run.setText(baseFolderName);
+			run.addBreak();
+			run.setText(" ");
 
 			List<String> imagePaths = parseFolderForImages(baseFolderPath);
 			for (String imagePath : imagePaths) {
@@ -32,25 +38,25 @@ public class WordExtractor {
 					String textAssociated = textDataService.getTxtForImg(imageFile);
 					if (!(textAssociated == null)) {
 						run.setText(textAssociated);
+						run.addBreak();
+						run.setText(" ");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 
-			String outputFile = Constants.WORD_DOC_EXTRACT_PATH + File.separator + filename + ".docx";
+			String outputFile = Constants.WORD_DOC_EXTRACT_PATH + File.separator + baseFolderName + ".docx";
 
-			// Write the document to a file
-			try (FileOutputStream fos = new FileOutputStream(outputFile)) {
-				document.write(fos);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			FileOutputStream fos = new FileOutputStream(outputFile);
+			document.write(fos);
+			JOptionPane.showMessageDialog(null, baseFolderName + " is extracted in \"Downloads\" folder", "Extracted",
+					JOptionPane.INFORMATION_MESSAGE);
+			document = null;
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error occurred while saving the document: " + e.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
-
 	}
 
 	private static List<String> parseFolderForImages(String folderPath) {
@@ -80,5 +86,4 @@ public class WordExtractor {
 		String fileName = file.getFileName().toString().toLowerCase();
 		return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
 	}
-
 }
